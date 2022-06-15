@@ -10,13 +10,18 @@ Get shudh indian responses on your Gform :)
 
 - After acting virtual environment created earlier, run the below code in the root of this repository.
 After the virtual environment is activated, it will be shown in following way
-### (auto) C:\Users\johndoe\OneDrive\Desktop\auto-gform>
-> in main.py, L25, enter your Google Form link
+### (auto) path\to\your\folder
+
 > note, each g-form is different and contain various combinations of different input fields. So modify the script accordingly. 
 <pre>job.sh</pre>
 
 It will install the required dependencies and open another terminal window. There provide the number of responses you want to inject and BOOM!
 the script works.
+
+## Usage
+- Enter your google form URL
+- Select number of responses.
+
 ## Upcoming
 > recaptcha bypass <br>
 > More user friendly flow
