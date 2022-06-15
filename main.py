@@ -15,7 +15,9 @@ from selenium import webdriver
 from time import time
 import warnings
 import sys
+from termcolor import colored
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 
 option = webdriver.ChromeOptions()
 option.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -27,7 +29,8 @@ browser = webdriver.Chrome(
     executable_path="./chromedriver.exe", options=option)
 
 # ENTER YOUR FORM LINK BELOW.
-browser.get("your gform link")
+link = input("Enter form URL: ")
+browser.get(link)
 
 # function to change the browser dimensions
 
@@ -40,36 +43,54 @@ def set_browser_size(driver, width, height):
     driver.set_window_size(*window_size)
 
 
-set_browser_size(browser, random.randint(400, 600),  random.randint(400, 600))
+set_browser_size(browser, 350, 350)
+
+
+# def link(uri, label=None):
+#     if label is None:
+#         label = uri
+#     parameters = ''
+
+#     # OSC 8 ; params ; URI ST <name> OSC 8 ;; ST
+#     escape_mask = '\033]8;{};{}\033\\{}\033]8;;\033\\'
+
+#     return escape_mask.format(parameters, uri, label)
+
 
 ascii_banner = pyfiglet.figlet_format("AUTO-GFORM")
-print(ascii_banner)
-i = int(input("Enter number of responses: "))
+# # text = "made with 💖🟩 by Himanshu"
+# # target = "http://github.com/himanshu007-creator"
+# sys.stdout.write(
+#     colored(link('https://github.com/himanshu007-creator', 'made with 💖🟩 by Himanshu'), 'cyan'))
+sys.stdout.write(colored(ascii_banner, 'cyan'))
+i = int(input(colored(f'Enter number of inject ops: ', 'green')))
+sys.stdout.write('\n')
 count = 1
 while(count <= i):
     try:
-
         # gender
         GENDER = ['male', 'female']
         ans = random.choice(GENDER)
+
+        # name
+        name_input = browser.find_element_by_xpath(
+            '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input')
+        if(ans == 'male'):
+            name = rand_naam.male()
+            name_input.send_keys(name)
+        else:
+            name = rand_naam.female()
+            name_input.send_keys(name)
 
         # email
         email_input = browser.find_element_by_xpath(
             '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/div[1]/input')
         if(ans == 'male'):
             email_input.send_keys(
-                rand_naam.male().replace(" ", "")+str(random.randint(2000, 9000))+"@gmail.com")
+                name.replace(" ", "")+str(random.randint(2000, 9000))+"@gmail.com")
         else:
             email_input.send_keys(
-                rand_naam.female().replace(" ", "")+str(random.randint(2000, 9000))+"@gmail.com")
-
-        # name
-        name_input = browser.find_element_by_xpath(
-            '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input')
-        if(ans == 'male'):
-            name_input.send_keys(rand_naam.male())
-        else:
-            name_input.send_keys(rand_naam.female())
+                name.replace(" ", "")+str(random.randint(2000, 9000))+"@gmail.com")
 
         # age
         age_choice = [13, 16, 19]
@@ -80,7 +101,9 @@ while(count <= i):
         # textboxes[0].send_keys("Hello World")
 
         # gender
-        gender_choice = [32, 35, 38]
+
+        # 38
+        gender_choice = [35, 32]
         gender_choice = random.choice(gender_choice)
         gender = browser.find_element_by_xpath(
             '//*[@id="i'+str(gender_choice)+'"]/div[3]/div')
@@ -189,7 +212,8 @@ while(count <= i):
         submitAgain = browser.find_element_by_xpath(
             '/html/body/div[1]/div[2]/div[1]/div/div[4]/a')
         submitAgain.click()
-        sys.stdout.write(f'{count} records inserted')
+        sys.stdout.write(colored(f'💉{count} records injected', 'red'))
+        sys.stdout.write('\n')
         sys.stdout.flush()
         count += 1
     except NoSuchElementException:
@@ -204,7 +228,7 @@ while(count <= i):
         browser.switch_to.alert.accept()
         # browser.close()
     except ValueError:
-        print("oops")
+        sys.stdout.write("oops")
 
 
 # browser.close()
